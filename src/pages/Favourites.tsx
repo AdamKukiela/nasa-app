@@ -19,7 +19,6 @@ const Favourites: React.FC = () => {
               title={fav.title}
               src={fav.url}
             />
-
             <CardContent>
               <Typography variant="h5">{fav.title}</Typography>
             </CardContent>

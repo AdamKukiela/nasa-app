@@ -1,11 +1,12 @@
 import React from "react";
-import Media from "../components/Picutre";
+import Media from "../components/Media";
+import { Box } from "@mui/material";
 
 const Home: React.FC = () => {
   return (
-    <div>
+    <Box>
       <Media />
-    </div>
+    </Box>
   );
 };
 

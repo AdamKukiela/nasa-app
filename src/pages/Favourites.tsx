@@ -1,10 +1,23 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../redux/store";
-import { Card, CardMedia, CardContent, Typography, Grid } from "@mui/material";
+import {
+  Card,
+  CardMedia,
+  CardContent,
+  Typography,
+  Grid,
+  Button,
+} from "@mui/material";
+import { removeFavourite } from "../redux/favouriteSlice";
 
 const Favourites: React.FC = () => {
   const favourites = useSelector((state: RootState) => state.favourites.items);
+  const dispatch = useDispatch();
+
+  const handleRemove = (url: string) => {
+    dispatch(removeFavourite(url));
+  };
 
   return (
     <Grid container spacing={2}>
@@ -21,6 +34,13 @@ const Favourites: React.FC = () => {
             />
             <CardContent>
               <Typography variant="h5">{fav.title}</Typography>
+              <Button
+                variant="contained"
+                color="secondary"
+                onClick={() => handleRemove(fav.url)}
+              >
+                Delete
+              </Button>
             </CardContent>
           </Card>
         </Grid>

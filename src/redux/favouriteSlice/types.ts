@@ -1,4 +1,4 @@
-type Favourite = {
+export type Favourite = {
   date?: string;
   explanation?: string;
   media_type?: string;

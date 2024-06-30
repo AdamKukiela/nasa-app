@@ -7,7 +7,8 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../redux/store";
 import { addFavourite } from "../redux/favouriteSlice";
 import { styled } from "@mui/system";
 import Snackbar from "@mui/material/Snackbar";
@@ -25,7 +26,9 @@ const Media: React.FC = () => {
     title: "",
   });
   const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [duplicateAlertOpen, setDuplicateAlertOpen] = useState(false);
   const dispatch = useDispatch();
+  const favourites = useSelector((state: RootState) => state.favourites.items);
 
   useEffect(() => {
     fetchMedia();
@@ -44,12 +47,22 @@ const Media: React.FC = () => {
   };
 
   const handleSave = () => {
-    dispatch(addFavourite(media));
-    setSnackbarOpen(true);
+    const isDuplicate = favourites.some((fav) => fav.url === media.url);
+
+    if (isDuplicate) {
+      setDuplicateAlertOpen(true);
+    } else {
+      dispatch(addFavourite(media));
+      setSnackbarOpen(true);
+    }
   };
 
   const handleSnackbarClose = () => {
     setSnackbarOpen(false);
+  };
+
+  const handleDuplicateAlertClose = () => {
+    setDuplicateAlertOpen(false);
   };
 
   return (
@@ -86,6 +99,21 @@ const Media: React.FC = () => {
           severity="success"
         >
           The media has been saved to favourites.
+        </MuiAlert>
+      </Snackbar>
+
+      <Snackbar
+        open={duplicateAlertOpen}
+        autoHideDuration={4000}
+        onClose={handleDuplicateAlertClose}
+      >
+        <MuiAlert
+          elevation={6}
+          variant="filled"
+          onClose={handleDuplicateAlertClose}
+          severity="warning"
+        >
+          You have already saved this media.
         </MuiAlert>
       </Snackbar>
     </StyledCard>

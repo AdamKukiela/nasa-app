@@ -24,14 +24,24 @@ const Favourites: React.FC = () => {
       {favourites.map((fav, index) => (
         <Grid item xs={12} sm={6} md={4} key={index}>
           <Card>
-            <CardMedia
-              component="iframe"
-              height="200"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-              title={fav.title}
-              src={fav.url}
-            />
+            {fav.media_type === "image" ? (
+              <CardMedia
+                component="img"
+                height="200"
+                alt={fav.title}
+                image={fav.url}
+                title={fav.title}
+              />
+            ) : (
+              <CardMedia
+                component="iframe"
+                height="200"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                title={fav.title}
+                src={fav.url}
+              />
+            )}
             <CardContent>
               <Typography variant="h5">{fav.title}</Typography>
               <Button
